@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Employee;
 import models.Report;
 import utils.DBUtil;
 
@@ -36,7 +37,29 @@ public class ReportsShowServlet extends HttpServlet {
             throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
+        // 日報取得
         Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
+
+        // ログインユーザー取得
+        Employee e = (Employee) request.getSession().getAttribute("login_employee");
+
+        //ログインユーザーのいいねの数取得
+        long like_count = em.createNamedQuery("getLikeCount2", Long.class)
+                .setParameter("report", r)
+                .setParameter("employee", e)
+                .getSingleResult();
+
+        int Likecount = 0;
+
+        if (r.getEmployee().getId() == e.getId()) {
+            //①ログインユーザー自身の日報の場合
+            Likecount = 1;
+        } else if (like_count > 0) {
+            //②すでにいいねを押した日報の場合
+            Likecount = 1;
+        }
+        //①と②の処理の反映
+        request.setAttribute("Likecount", Likecount);
 
         em.close();
 

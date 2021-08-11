@@ -149,7 +149,11 @@ table#report_list .report_date {
 }
 
 table#report_list .report_title {
-    width: 37%;
+    width: 27%;
+}
+
+table#report_list .like_count {
+    width: 10%;
 }
 
 table#report_list .report_action {

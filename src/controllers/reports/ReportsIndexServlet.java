@@ -51,6 +51,16 @@ public class ReportsIndexServlet extends HttpServlet {
         long reports_count = em.createNamedQuery("getReportsCount", Long.class)
                 .getSingleResult();
 
+        //いいねの情報を所得してレポートにセットする
+        for (Report r : reports) {
+            long like_count = em.createNamedQuery("getLikeCount", Long.class)
+                    .setParameter("report", r)
+                    .getSingleResult();
+
+            r.setLikeCount(like_count);
+
+        }
+
         em.close();
 
         request.setAttribute("reports", reports);

@@ -38,9 +38,15 @@
                     </tbody>
                 </table>
 
+                <c:if test="${Likecount == 0}">
+                    <p><a href="<c:url value="/like/create?id=${report.id}" />">いいね</a></p>
+                </c:if>
+
                 <c:if test="${sessionScope.login_employee.id == report.employee.id}">
                     <p><a href="<c:url value="/reports/edit?id=${report.id}" />">この日報を編集する</a></p>
                 </c:if>
+
+
             </c:when>
             <c:otherwise>
                 <h2>お探しのデータは見つかりませんでした。</h2>

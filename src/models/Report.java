@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Table(name = "reports")
 @NamedQueries({
@@ -49,6 +50,9 @@ public class Report {
 
     @Column(name = "updated_at", nullable = false)
     private Timestamp updated_at;
+
+    @Transient
+    private Long like_count;
 
     public Integer getId() {
         return id;
@@ -104,6 +108,14 @@ public class Report {
 
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public Long getLike_count() {
+        return like_count;
+    }
+
+    public void setLikeCount(Long like_count) {
+        this.like_count = like_count;
     }
 
 }
